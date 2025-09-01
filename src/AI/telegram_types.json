@@ -1,0 +1,245 @@
+{
+    "sendMessage": {
+        "description": "Send text messages",
+        "fields": {
+            "chat_id": "int | string (unique identifier for target chat or @username)",
+            "text": "string (required)",
+            "parse_mode": "string (optional: Markdown, MarkdownV2, HTML)",
+            "entities": "array of message entities (optional: bold, italic, url, mention, etc.)",
+            "disable_web_page_preview": "boolean (optional, disable link previews)",
+            "disable_notification": "boolean (optional, send silently)",
+            "protect_content": "boolean (optional, prevents saving/forwarding)",
+            "reply_to_message_id": "int (optional, reply to specific message)",
+            "allow_sending_without_reply": "boolean (optional)",
+            "reply_markup": "inline_keyboard | reply_keyboard | remove_keyboard | force_reply"
+        }
+    },
+    "sendPhoto": {
+        "description": "Send photo with optional caption",
+        "fields": {
+            "chat_id": "int | string",
+            "photo": "string (file_id | HTTP URL | attach://<file>)",
+            "caption": "string (optional)",
+            "parse_mode": "string (optional)",
+            "caption_entities": "array (optional)",
+            "has_spoiler": "boolean (optional, hides photo until clicked)",
+            "disable_notification": "boolean",
+            "protect_content": "boolean",
+            "reply_markup": "inline_keyboard"
+        }
+    },
+    "sendVideo": {
+        "description": "Send video files",
+        "fields": {
+            "chat_id": "int | string",
+            "video": "string (file_id | HTTP URL | attach://<file>)",
+            "duration": "int (optional, seconds)",
+            "width": "int (optional)",
+            "height": "int (optional)",
+            "thumbnail": "string (optional file_id or URL)",
+            "caption": "string (optional)",
+            "parse_mode": "string",
+            "caption_entities": "array",
+            "supports_streaming": "boolean (optional)",
+            "has_spoiler": "boolean (optional)",
+            "disable_notification": "boolean",
+            "protect_content": "boolean",
+            "reply_markup": "inline_keyboard"
+        }
+    },
+    "sendAudio": {
+        "description": "Send audio files (music, podcasts)",
+        "fields": {
+            "chat_id": "int | string",
+            "audio": "string (file_id | URL | attach://<file>)",
+            "caption": "string (optional)",
+            "parse_mode": "string",
+            "caption_entities": "array",
+            "duration": "int (optional)",
+            "performer": "string (optional)",
+            "title": "string (optional)",
+            "thumbnail": "string (file_id | URL)",
+            "disable_notification": "boolean",
+            "protect_content": "boolean",
+            "reply_markup": "inline_keyboard"
+        }
+    },
+    "sendVoice": {
+        "description": "Send voice messages (OGG, Opus)",
+        "fields": {
+            "chat_id": "int | string",
+            "voice": "string (file_id | URL | attach://<file>)",
+            "caption": "string (optional)",
+            "parse_mode": "string",
+            "caption_entities": "array",
+            "duration": "int (optional)",
+            "disable_notification": "boolean",
+            "protect_content": "boolean",
+            "reply_markup": "inline_keyboard"
+        }
+    },
+    "sendDocument": {
+        "description": "Send generic files",
+        "fields": {
+            "chat_id": "int | string",
+            "document": "string (file_id | URL | attach://<file>)",
+            "thumbnail": "string (file_id | URL)",
+            "caption": "string (optional)",
+            "parse_mode": "string",
+            "caption_entities": "array",
+            "disable_content_type_detection": "boolean",
+            "disable_notification": "boolean",
+            "protect_content": "boolean",
+            "reply_markup": "inline_keyboard"
+        }
+    },
+    "sendSticker": {
+        "description": "Send sticker (static/animated/video)",
+        "fields": {
+            "chat_id": "int | string",
+            "sticker": "string (file_id | URL | attach://<file>)",
+            "emoji": "string (optional for setStickerSetThumb)",
+            "disable_notification": "boolean",
+            "protect_content": "boolean",
+            "reply_markup": "inline_keyboard"
+        }
+    },
+    "sendAnimation": {
+        "description": "Send GIF or H.264/MPEG4 animation",
+        "fields": {
+            "chat_id": "int | string",
+            "animation": "string (file_id | URL | attach://<file>)",
+            "duration": "int (optional)",
+            "width": "int",
+            "height": "int",
+            "thumbnail": "string",
+            "caption": "string",
+            "parse_mode": "string",
+            "caption_entities": "array",
+            "has_spoiler": "boolean",
+            "disable_notification": "boolean",
+            "protect_content": "boolean",
+            "reply_markup": "inline_keyboard"
+        }
+    },
+    "sendLocation": {
+        "description": "Send location",
+        "fields": {
+            "chat_id": "int | string",
+            "latitude": "float",
+            "longitude": "float",
+            "horizontal_accuracy": "float (optional, meters)",
+            "live_period": "int (seconds, for live location)",
+            "heading": "int (optional, degrees)",
+            "proximity_alert_radius": "int (optional, meters)",
+            "disable_notification": "boolean",
+            "protect_content": "boolean",
+            "reply_markup": "inline_keyboard"
+        }
+    },
+    "sendVenue": {
+        "description": "Send venue (location + address)",
+        "fields": {
+            "chat_id": "int | string",
+            "latitude": "float",
+            "longitude": "float",
+            "title": "string",
+            "address": "string",
+            "foursquare_id": "string (optional)",
+            "foursquare_type": "string (optional)",
+            "google_place_id": "string (optional)",
+            "google_place_type": "string (optional)",
+            "disable_notification": "boolean",
+            "protect_content": "boolean",
+            "reply_markup": "inline_keyboard"
+        }
+    },
+    "sendContact": {
+        "description": "Send phone contact",
+        "fields": {
+            "chat_id": "int | string",
+            "phone_number": "string",
+            "first_name": "string",
+            "last_name": "string (optional)",
+            "vcard": "string (optional)",
+            "disable_notification": "boolean",
+            "protect_content": "boolean",
+            "reply_markup": "inline_keyboard"
+        }
+    },
+    "poll": {
+        "description": "Send poll or quiz",
+        "fields": {
+            "chat_id": "int | string",
+            "question": "string",
+            "options": "array of string (2–10 answers)",
+            "is_anonymous": "boolean",
+            "type": "string (regular | quiz)",
+            "allows_multiple_answers": "boolean",
+            "correct_option_id": "int (for quiz)",
+            "explanation": "string (optional for quiz)",
+            "explanation_parse_mode": "string",
+            "open_period": "int (lifetime in seconds)",
+            "close_date": "int (unix timestamp)",
+            "is_closed": "boolean",
+            "disable_notification": "boolean",
+            "protect_content": "boolean",
+            "reply_markup": "inline_keyboard"
+        }
+    },
+    "dice": {
+        "description": "Send animated emoji dice 🎲 🎯 🎳 🎰 🏀 ⚽",
+        "fields": {
+            "chat_id": "int | string",
+            "emoji": "string (one of 🎲 🎯 🎳 🎰 🏀 ⚽)",
+            "disable_notification": "boolean",
+            "protect_content": "boolean",
+            "reply_markup": "inline_keyboard"
+        }
+    },
+    "reply_markup_types": {
+        "inline_keyboard": {
+            "description": "Inline buttons shown under message",
+            "fields": {
+                "inline_keyboard": "array of button rows",
+                "button": {
+                    "text": "string",
+                    "url": "string (optional)",
+                    "callback_data": "string (optional, 1–64 bytes)",
+                    "web_app": "object (optional, WebAppInfo)",
+                    "login_url": "object (optional, LoginUrl)",
+                    "switch_inline_query": "string (optional)",
+                    "switch_inline_query_current_chat": "string (optional)",
+                    "switch_inline_query_chosen_chat": "object (optional)",
+                    "callback_game": "object (optional)",
+                    "pay": "boolean (optional)"
+                }
+            }
+        },
+        "reply_keyboard": {
+            "description": "Custom keyboard replacing default",
+            "fields": {
+                "keyboard": "array of button rows",
+                "resize_keyboard": "boolean",
+                "one_time_keyboard": "boolean",
+                "input_field_placeholder": "string",
+                "selective": "boolean"
+            }
+        },
+        "remove_keyboard": {
+            "description": "Remove custom keyboard",
+            "fields": {
+                "remove_keyboard": "true",
+                "selective": "boolean"
+            }
+        },
+        "force_reply": {
+            "description": "Force user to reply",
+            "fields": {
+                "force_reply": "true",
+                "input_field_placeholder": "string",
+                "selective": "boolean"
+            }
+        }
+    }
+}

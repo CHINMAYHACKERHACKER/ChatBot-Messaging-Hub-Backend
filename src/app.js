@@ -28,13 +28,7 @@ app.get('/health', (req, res) => {
 // API routes
 app.use('/user', signUpRoute);
 app.use('/v1/user', userRoute);
-app.use('/v1/channel', channelRoute);
-
-app.post(`/bot`, (req, res) => {
-    console.log(req.body);
-    // bot.processUpdate(req.body);
-    res.sendStatus(200);
-})
+app.use('/v1/telegram', channelRoute);
 
 // Global error handler
 app.use((err, req, res, next) => {

@@ -1,7 +1,7 @@
 import { telegramModel } from "../models/telegramModel.js";
-import { AITelegramBot } from "../AI/telegramBot.js";
 import TelegramBot from "node-telegram-bot-api";
-import { publishTelegram } from "../AI/publishTelegramBot.js";
+import agent from "../AI/agent.js";
+import { HumanMessage } from '@langchain/core/messages';
 
 class Telegram {
     static async connectTelegram(req, res) {
@@ -67,7 +67,7 @@ class Telegram {
             const { refreshToken, body: { prompt, createdBy, clientId } } = req;
             const getConnectedBotConfigRes = await telegramModel.getConnectedBotConfig(createdBy, clientId);
             if (getConnectedBotConfigRes && getConnectedBotConfigRes.is_connected && getConnectedBotConfigRes.bot_token) {
-                const AITelegramBotRes = await AITelegramBot.AITelegram(prompt);
+                // const AITelegramBotRes = await AITelegramBot.AITelegram(prompt);
                 return res.send({ status: true, code: 200, data: AITelegramBotRes, refreshToken: refreshToken });
             } else {
                 return res.send({ status: false, code: 204, data: null, message: !getConnectedBotConfigRes.is_connected ? "The bot is currently not connected. Please connect your bot to continue." : "Bot token is missing or invalid. Please configure a valid token to proceed.", refreshToken: refreshToken });
@@ -92,24 +92,24 @@ class Telegram {
             };
             const insertBotRes = await telegramModel.insertTelegramBot(reqObj);
             if (insertBotRes && isPublished) {
-                const getConnectedBotConfigRes = await telegramModel.getConnectedBotConfig(botCreatedBy, clientId);
-                const publishTelegramBotRes = await publishTelegram.publishTelegramBot(telegramBotFlowJson, getConnectedBotConfigRes.bot_token);
-                if (publishTelegramBotRes) {
-                    publishTelegramBotRes.launch({
-                        webhook: {
-                            domain: "https://typedwebhook.tools/webhook/4fe64240-799d-4875-9b69-abd017120201",
-                            // port: port,
-                            // path: webhookPath,
-                            // secretToken: randomAlphaNumericString,
-                        },
-                    });
-                    return res.send({ status: true, code: 200, data: null, message: "Telegram bot has been successfully published.", refreshToken: refreshToken });
-                } else {
-                    return res.send({ status: false, code: 204, data: null, message: "Unable to publish the Telegram bot. Please try again.", refreshToken: refreshToken });
-                }
+                return res.send({ status: true, code: 200, data: null, message: "Telegram bot has been successfully published.", refreshToken: refreshToken });
             } else {
                 return res.send({ status: false, code: 204, data: null, message: "Bot configuration is incomplete. Please ensure the bot is connected and a valid token is provided before publishing.", refreshToken: refreshToken });
             }
+        } catch (err) {
+            return res.send({ status: false, code: 500, message: "Server Internal Error" });
+        }
+    }
+
+    static async createTelegramCampaign(req, res) {
+        try {
+            const { refreshToken, body: { prompt } } = req;
+            const result = await agent.invoke({
+                messages: [
+                    new HumanMessage(prompt)
+                ]
+            })
+            return res.send({ status: true, code: 200, data: result.messages[result.messages.length - 1].content, message: "Telegram campaign has been created successfully.", refreshToken: refreshToken });
         } catch (err) {
             return res.send({ status: false, code: 500, message: "Server Internal Error" });
         }

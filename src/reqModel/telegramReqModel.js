@@ -27,3 +27,7 @@ export const publishTelegramBotReqModel = Joi.object({
     isPublished: Joi.boolean().default(false),
     telegramBotFlowJson: Joi.alternatives().try(Joi.any()).required()
 });
+
+export const campaignReqModel = Joi.object({
+    prompt: Joi.string().required()
+});
