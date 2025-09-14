@@ -3,6 +3,13 @@ import TelegramBot from "node-telegram-bot-api";
 import agent from "../AI/agent.js";
 import { HumanMessage } from '@langchain/core/messages';
 
+function cleanJSON(raw) {
+    return raw
+        .replace(/```json\n?/, "") // remove starting ```json
+        .replace(/```\s*$/, "")    // remove ending ```
+        .trim();
+}
+
 class Telegram {
     static async connectTelegram(req, res) {
         let bot = null;
@@ -101,15 +108,25 @@ class Telegram {
         }
     }
 
+
+
     static async createTelegramCampaign(req, res) {
         try {
             const { refreshToken, body: { prompt } } = req;
+            let parsed;
             const result = await agent.invoke({
                 messages: [
                     new HumanMessage(prompt)
                 ]
             })
-            return res.send({ status: true, code: 200, data: result.messages[result.messages.length - 1].content, message: "Telegram campaign has been created successfully.", refreshToken: refreshToken });
+            const raw = result.messages[result.messages.length - 1].content;
+            const cleaned = cleanJSON(raw);
+            try {
+                parsed = JSON.parse(cleaned);
+            } catch (err) {
+                console.error("❌ Failed to parse JSON:", err);
+            }
+            return res.send({ status: true, code: 200, parsed, message: "Telegram campaign has been created successfully.", refreshToken: refreshToken });
         } catch (err) {
             return res.send({ status: false, code: 500, message: "Server Internal Error" });
         }
